@@ -8,7 +8,7 @@ st.set_page_config(layout="wide")
 st.title("📚 Dashboard de Livros")
 st.write("Se você está vendo esta página, o seu ambiente está pronto! 🎉")
 
-col1, col2, col3 = st.columns(3)
+col1, col2, col3, col4 = st.columns(4)
 
 livros = dados.ler_livros()
 
@@ -20,6 +20,9 @@ col2.metric("Preço médio", f"£{round(preco_medio, 2)}")
 
 qtd_cinco = dados.contar_cinco_estrelas(livros)
 col3.metric("Livros com 5 estrelas", qtd_cinco)
+
+livro_mais_caro = dados.achar_livro_mais_caro(livros)
+col4.metric("O livro mais caro custa", livro_mais_caro[1], f"{livro_mais_caro[0]}")
 
 
 st.dataframe(livros)

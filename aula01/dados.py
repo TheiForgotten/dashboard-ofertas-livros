@@ -67,6 +67,19 @@ def contar_cinco_estrelas(livros):
 
     return contador
 
+def achar_livro_mais_caro(livros):
+    livro_mais_caro = ["", ""]
+    max: float = 0
+    for livro in livros:
+        preco_original: str = livro["preco"]
+        preco_original_limpo: str = preco_original.replace("£", "")
+        preco_num: float = float(preco_original_limpo)
+        if preco_num > max:
+            max = preco_num
+            livro_mais_caro[0] = livro["titulo"]
+            livro_mais_caro[1] = livro["preco"]
+    return livro_mais_caro
+
 
 
 if __name__ == "__main__":
@@ -76,5 +89,8 @@ if __name__ == "__main__":
     # preco_medio: float = calcular_preco_medio(livros)
     # print(f"o preco medio dos livros é de {round(preco_medio, 2)}")
 
-    cinco_estrelas = contar_cinco_estrelas(livros)
-    print(f"existe {cinco_estrelas} livros com cinco estrelas")
+    # cinco_estrelas = contar_cinco_estrelas(livros)
+    # print(f"existe {cinco_estrelas} livros com cinco estrelas")
+
+    livro_mais_caro = achar_livro_mais_caro(livros)
+    print(f"o livro mais caro é {livro_mais_caro[0]} com o preco de {livro_mais_caro[1]}")
