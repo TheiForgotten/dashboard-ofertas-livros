@@ -5,6 +5,23 @@ import streamlit as st
 
 import dados
 
+
+
+def montar_tabela(livros):
+    livros = dados.carregar_livros()
+    tabela = []
+    for livro in livros:
+        linha = {
+            "Título": livro["titulo"],
+            "Categoria": livro["categoria"],
+            "Nota": "⭐" * livro["nota"],
+            "Preço": f"£ {livro["preco"]: .2f}",
+            "Faixa": dados.classificar_preco(livro["preco"])
+        }
+        tabela.append(linha)
+    return tabela
+
+
 def main():
     st.set_page_config(page_title="Dashboard de Livros", page_icon="📚", layout="wide")
     st.title("📚 Dashboard de Livros")
@@ -25,7 +42,7 @@ def main():
     col4.metric("Livro mais caro", mais_caro["preco"])
     col4.caption(mais_caro["titulo"])
 
-    st.dataframe(livros)
+    st.dataframe(montar_tabela(livros))
 
 
 if __name__ == "__main__":

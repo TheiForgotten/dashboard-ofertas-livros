@@ -9,6 +9,7 @@ PASTA = Path(__file__).parent
 CAMINHO_LIVROS = PASTA / "livros.csv"
 
 
+
 def ler_livros():
     """Lê o CSV de livros e devolve uma lista de dicionários.
 
@@ -36,9 +37,7 @@ def calcular_preco_medio(livros):
     """
     soma: float = 0
     for livro in livros:
-        preco_original: str = livro["preco"]
-        preco_original_limpo: str = preco_original.replace("£", "")
-        preco_num: float = float(preco_original_limpo)
+        preco_num: float = converter_preco(livro["preco"])
         soma += preco_num
 
     preco_medio: float = soma / len(livros)
@@ -49,8 +48,7 @@ def contar_cinco_estrelas(livros):
     """Conta quantos livros têm a nota máxima. A nota vem como texto ("Five")."""
     contador: int = 0
     for livro in livros:
-        nota_limpa: str = livro["nota"].lower().strip()
-        if nota_limpa == "five":
+        if converter_nota(livro["nota"]) == 5:
             contador += 1
 
     return contador
@@ -67,7 +65,53 @@ def encontrar_mais_caro(livros):
     return mais_caro
 
 
+def converter_preco(texto):
+    return float(texto.replace("£", ""))
+
+
+def converter_nota(texto):
+    if texto == "One":
+        return 1
+    if texto == "Two":
+        return 2
+    if texto == "Three":
+        return 3
+    if texto == "Four":
+        return 4
+    if texto == "Five":
+        return 5
+    else:
+        return 0
+
+
+def preparar_livros(linhas):
+    livros = []
+    for linha in linhas:
+        livro = {
+            "titulo": linha["titulo"],
+            "preco": converter_preco(linha["preco"]), 
+            "nota": converter_nota(linha["nota"]),
+            "categoria": linha["categoria"],
+            "url": linha["url"],
+        }
+        livros.append(livro)
+
+    return livros
+
+
+def carregar_livros():
+    return preparar_livros(ler_livros())
+
+
+def classificar_preco(preco):
+    if preco < 20:
+        return "Barato"
+    if preco <= 40:
+        return "Média"
+    else:
+        return "Caro"
+     
 if __name__ == "__main__":
     livros = ler_livros()
-    print(f"{len(livros)} livros carregados")
-    print("Primeiro livro:", livros[0])
+
+    print (classificar_preco(12.4))
