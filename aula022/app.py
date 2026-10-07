@@ -68,9 +68,8 @@ def main():
 
     tabela_busca = montar_tabela(buscar_titulo)
 
-    if not tabela_busca:
+    if len(buscar_titulo) == 0:
         st.caption("O livro não existe")
-        st.dataframe(tabela)
     else:
        st.dataframe(tabela_busca) 
     
