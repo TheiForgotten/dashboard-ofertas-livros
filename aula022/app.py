@@ -12,7 +12,7 @@ def montar_tabela(livros):
         linha = {
             "Título": livro["titulo"],
             "Categoria": livro["categoria"],
-            "Nota": livro["nota"] * "⭐",
+            "Nota": "⭐" * livro["nota"],
             "Preço": f"£ {livro["preco"]:.2f}",
             "Faixa": classificar_preco(livro["preco"])
         }
@@ -62,14 +62,20 @@ def main():
     col4.metric("Livro mais caro", f"£{mais_caro["preco"]}")
     col4.caption(mais_caro["titulo"])
 
-    busca = st.text_input("Buscar Livros:")
+    col_busca, col_categoria = st.columns(2)
+
+    busca = col_busca.text_input("Buscar Livros:")
+    categoria = col_categoria.selectbox("Filtrar por categoria", dados.listar_categoria(livros))
+
+    encontrados = dados.filtrar_por_categoria
+
 
     buscar_titulo = dados.buscar_por_titulo(livros, busca)
 
     tabela_busca = montar_tabela(buscar_titulo)
 
     if len(buscar_titulo) == 0:
-        st.caption("O livro não existe")
+        st.warning("! O livro não existe !")
     else:
        st.dataframe(tabela_busca) 
     

@@ -107,6 +107,23 @@ def buscar_por_titulo(livros, busca):
             livros_busca.append(livro_busca)
     return livros_busca
     
+def listar_categoria(livros):
+    lista = []
+    for livro in livros:
+        if not livro["categoria"] in lista:
+            lista.append(livro["categoria"])
+
+    return lista
+
+
+def filtrar_por_categoria(livros, categoria):
+    resultado = []
+    for livro in livros:
+        if livro["categoria"] == categoria:
+            resultado.append(livro)
+    
+    return resultado
+
 
 
 if __name__ == "__main__":
@@ -114,4 +131,4 @@ if __name__ == "__main__":
     #print(f"{len(livros)} livros carregados")
     #print("Primeiro livro:", livros[0])
 
-    print(buscar_por_titulo(livros, "harry"))
+    print(carregar_livros)
